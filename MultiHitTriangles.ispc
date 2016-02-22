@@ -244,7 +244,7 @@ void multiHitFilterProgAoSIndex(void *uniform geom, varying RTCRay& _ray)
   if (ray.geomID < 0)
     return;
 
-  unifrm MultiHitInfo *uniform mhiaos =
+  uniform MultiHitInfo *uniform mhiaos =
       (uniform MultiHitInfo *uniform)ray.userData;
   foreach_active (l)
   {

@@ -40,6 +40,9 @@
 #  define MHTK_SHOW_SWAPS (0)
 #endif
 
+// '1' to use index based sorting instead of sorting entire hit points
+#define INDEX_SORT (0)
+
 // Data structures ////////////////////////////////////////////////////////////
 
 /*! \defgroup mhtk_module_ispc Multi-hit Traversal Kernel (MHTK) module (ISPC)
@@ -56,8 +59,6 @@ struct MHTKHit
 };
 
 #define MAX_HITS_PER_TRACE 512
-
-#define INDEX_SORT (0)
 
 struct MultiHitInfo
 {
