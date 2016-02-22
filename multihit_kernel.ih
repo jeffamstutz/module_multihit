@@ -22,7 +22,7 @@
 // Compile-time options ///////////////////////////////////////////////////////
 
 // '1' for sorting after intersection
-#define MHTK_POST_SORTING (0)
+#define MHTK_POST_SORTING (1)
 
 #define MHTK_LAYOUT_AOS (0)
 
@@ -38,11 +38,6 @@
 #if MHTK_SHOW_RAY_COHERENCE
 #  undef MHTK_SHOW_SWAPS
 #  define MHTK_SHOW_SWAPS (0)
-#endif
-
-#ifndef MHTK_SORTING
-#  undef MHTK_SHOW_RAY_COHERENCE
-#  define MHTK_SHOW_RAY_COHERENCE (1)
 #endif
 
 // Data structures ////////////////////////////////////////////////////////////

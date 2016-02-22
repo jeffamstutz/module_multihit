@@ -18,8 +18,10 @@
 #include "embree2/rtcore_geometry.isph"
 #include "multihit_kernel.ih"
 
-void multiHitFilterPostSoA(void *uniform geom, varying Ray& ray)
+void multiHitFilterPostSoA(void *uniform geom, varying RTCRay& _ray)
 {
+  varying Ray &ray = (varying Ray &)_ray;
+
   varying MultiHitInfo *uniform mhi =
       (varying MultiHitInfo *uniform)ray.userData;
 
@@ -97,8 +99,10 @@ void multiHitFilterProgSoA(void *uniform geom, varying RTCRay& _ray)
 }
 
 #if INDEX_SORT
-void multiHitFilterProgSoAIndex(void *uniform geom, varying Ray& ray)
+void multiHitFilterProgSoAIndex(void *uniform geom, varying RTCRay& _ray)
 {
+  varying Ray &ray = (varying Ray &)_ray;
+
   varying MultiHitInfo *uniform mhi =
       (varying MultiHitInfo *uniform)ray.userData;
 
@@ -156,8 +160,10 @@ void multiHitFilterProgSoAIndex(void *uniform geom, varying Ray& ray)
 #endif
 
 /*! Intersection filter function for varying rays. */
-void multiHitFilterPostAoS(void *uniform geom, varying Ray& ray)
+void multiHitFilterPostAoS(void *uniform geom, varying RTCRay& _ray)
 {
+  varying Ray &ray = (varying Ray &)_ray;
+
   if (ray.geomID < 0)
     return;
 
@@ -189,8 +195,10 @@ void multiHitFilterPostAoS(void *uniform geom, varying Ray& ray)
 }
 
 /*! Intersection filter function for varying rays. */
-void multiHitFilterProgAoS(void *uniform geom, varying Ray& ray)
+void multiHitFilterProgAoS(void *uniform geom, varying RTCRay& _ray)
 {
+  varying Ray &ray = (varying Ray &)_ray;
+
   if (ray.geomID < 0)
     return;
 
@@ -229,12 +237,14 @@ void multiHitFilterProgAoS(void *uniform geom, varying Ray& ray)
 }
 
 #if INDEX_SORT
-void multiHitFilterProgAoSIndex(void *uniform geom, varying Ray& ray)
+void multiHitFilterProgAoSIndex(void *uniform geom, varying RTCRay& _ray)
 {
+  varying Ray &ray = (varying Ray &)_ray;
+
   if (ray.geomID < 0)
     return;
 
-  uniform MultiHitInfo *uniform mhiaos =
+  unifrm MultiHitInfo *uniform mhiaos =
       (uniform MultiHitInfo *uniform)ray.userData;
   foreach_active (l)
   {
