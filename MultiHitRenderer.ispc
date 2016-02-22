@@ -23,30 +23,6 @@
 #include "ospray/common/Model.ih"
 #include "multihit_kernel.ih"
 
-// '1' for sorting after intersection
-#define MHTK_POST_SORTING (0)
-
-#define MHTK_LAYOUT_AOS (0)
-
-// '1' to visualize # of sort swaps, '0' for average # of divergent sorts
-#define MHTK_SHOW_SWAPS (1)
-
-// '1' to visualize ray coherence, '0' to show swaps
-#define MHTK_SHOW_RAY_COHERENCE (0)
-
-// '1' to activate calculating performance data (required for visuals)
-#define MHTK_MEASUREMENTS (1)
-
-#if MHTK_SHOW_RAY_COHERENCE
-#  undef MHTK_SHOW_SWAPS
-#  define MHTK_SHOW_SWAPS (0)
-#endif
-
-#ifndef MHTK_SORTING
-#  undef MHTK_SHOW_RAY_COHERENCE
-#  define MHTK_SHOW_RAY_COHERENCE (1)
-#endif
-
 struct MultiHitRenderer
 {
   uniform Renderer super;
@@ -74,101 +50,9 @@ inline vec3f make_bin_color(const int i, const int max)
     return make_vec3f(1.f, 0.0, 0.f);                         // red
 }
 
-inline void sortHits_SoA(varying MultiHitInfo *uniform mhi)
-{
-  /* sort the hitpoints (only for measuring performance) */
-  for (uniform int i = 0; i < mhi->numHits - 1; ++i)
-  {
-    float d = mhi->hitArray[i].t;
-#if !INDEX_SORT
-    int pos = i;
-    bool doSwap = false;
-#endif
-    for (int j = i+1; j < mhi->numHits; ++j)
-    {
-      if(mhi->hitArray[j].t < d)
-      {
-#if INDEX_SORT
-        mhi->hitOrder[i] = j;
-#  if MHTK_MEASUREMENTS
-        mhi->numSwaps++;
-
-        /* count the number of incoherent lanes */
-        uniform unique = 0;
-        foreach_unique(val in programIndex)
-          unique++;
-        mhi->numCoherent += unique;
-#  endif
-#else
-        doSwap = true;
-        pos = j;
-#endif
-        d = mhi->hitArray[j].t;
-      }
-    }
-
-#if !INDEX_SORT
-    if (doSwap)
-    {
-      varying MHTKHit tmp = mhi->hitArray[i];
-      mhi->hitArray[i]    = mhi->hitArray[pos];
-      mhi->hitArray[pos]  = tmp;
-
-#  if MHTK_MEASUREMENTS
-      mhi->numSwaps++;
-
-      /* count the number of incoherent lanes */
-      uniform unique = 0;
-      foreach_unique(val in programIndex)
-        unique++;
-      mhi->numCoherent += unique;
-#  endif
-    }
-#endif
-  }
-}
-
-inline void sortHits_AoS(MultiHitInfoAoS *uniform mhi)
-{
-  foreach_active (l)
-  {
-    uniform MultiHitInfo *uniform umhi = &((*mhi)[l]);
-    for (uniform int i = 0; i < umhi->numHits - 1; ++i)
-    {
-      uniform float d = umhi->hitArray[i].t;
-#if !INDEX_SORT
-      uniform int pos = i;
-      uniform bool doSwap = false;
-#endif
-      for (uniform int j = i+1; j < umhi->numHits; ++j)
-      {
-        if(umhi->hitArray[j].t < d)
-        {
-#if INDEX_SORT
-          umhi->hitOrder[i] = j;
-#else
-          doSwap = true;
-          pos = j;
-#endif
-          d = umhi->hitArray[j].t;
-        }
-      }
-
-#if !INDEX_SORT
-      if (doSwap)
-      {
-        uniform MHTKHit tmp = umhi->hitArray[i];
-        umhi->hitArray[i]     = umhi->hitArray[pos];
-        umhi->hitArray[pos]   = tmp;
-      }
-#endif
-    }
-  }
-}
-
 void MultiHitRenderer_renderSample(uniform Renderer *uniform _renderer,
-                               void *uniform /*perFrameData*/,
-                               varying ScreenSample &sample)
+                                   void *uniform /*perFrameData*/,
+                                   varying ScreenSample &sample)
 {
   uniform MultiHitRenderer *uniform renderer =
       (uniform MultiHitRenderer *uniform)_renderer;
