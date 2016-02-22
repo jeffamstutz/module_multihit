@@ -20,12 +20,6 @@ if (OSPRAY_MODULE_MULTIHIT)
 
   configure_ospray()
 
-#  set(OSPRAY_MODULE_MHTK_SORTING ON CACHE BOOL "Sort MHTK intersections")
-
-#  if (OSPRAY_MODULE_MHTK_SORTING)
-#    add_definitions_ispc(-DMHTK_SORTING)
-#  endif()
-
   include_directories(
     ${PROJECT_SOURCE_DIR}/ospray
     ${PROJECT_SOURCE_DIR}/ospray/geometry
@@ -41,15 +35,34 @@ if (OSPRAY_MODULE_MULTIHIT)
     ${CMAKE_CURRENT_SOURCE_DIR}
   )
 
-  ospray_add_library(ospray_module_mhtk${OSPRAY_LIB_SUFFIX} SHARED
+  ospray_add_library(ospray_module_multihit${OSPRAY_LIB_SUFFIX} SHARED
     MultiHitRenderer.cpp
     MultiHitRenderer.ispc
     MultiHitTriangles.cpp
     MultiHitTriangles.ispc
   )
 
-  target_link_libraries(ospray_module_mhtk${OSPRAY_LIB_SUFFIX}
+  target_link_libraries(ospray_module_multihit${OSPRAY_LIB_SUFFIX}
     ospray${OSPRAY_LIB_SUFFIX}
   )
+
+  if (NOT THIS_IS_MIC)
+    include_directories(
+      ${PROJECT_SOURCE_DIR}/apps/modelViewer
+    )
+
+    add_executable(ospMultiHitViewer
+      multihitViewer.cpp
+    )
+
+    target_link_libraries(ospMultiHitViewer
+      ospray
+      ospray_minisg
+      ospray_glut3d
+      ospray_module_multihit
+      ${OPENGL_LIBRARIES}
+      ${GLUT_LIBRARIES}
+    )
+  endif()
 
 endif()
