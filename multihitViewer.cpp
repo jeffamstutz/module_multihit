@@ -618,9 +618,7 @@ namespace ospray {
       }
     }
 
-#if 0//NOTE(jda) - use module API when loading modules is fixed
     ospLoadModule("multihit");
-#endif
 
     // -------------------------------------------------------
     // done parsing

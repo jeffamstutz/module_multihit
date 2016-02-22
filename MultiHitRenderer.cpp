@@ -70,7 +70,7 @@ namespace mhtk   {
       if (ospLanes) activeLanes = (int*)ospLanes->data;
       if (ospSwaps) swaps = (int*)ospSwaps->data;
 
-      bufferWidth    = getParam1i("bufferWidth", 0);
+      bufferWidth = getParam1i("bufferWidth", 0);
 
       if (model && camera)
       {
@@ -119,9 +119,9 @@ namespace mhtk   {
     OSP_REGISTER_RENDERER(MultiHitRenderer,xray);
     /*! @} */
     /*! \brief module initialization function \ingroup module_mhtk */
-    extern "C" void ospray_init_module_mhtk() 
+    extern "C" void ospray_init_module_multihit()
     {
-      printf("Loaded 'multi-hit traversal kernel' (mhtk) plugin ...\n");
+      printf("Loaded 'multi-hit traversal' plugin ...\n");
     }
 
 }// namespace mhtk

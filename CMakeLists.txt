@@ -59,7 +59,6 @@ if (OSPRAY_MODULE_MULTIHIT)
       ospray
       ospray_minisg
       ospray_glut3d
-      ospray_module_multihit
       ${OPENGL_LIBRARIES}
       ${GLUT_LIBRARIES}
     )
