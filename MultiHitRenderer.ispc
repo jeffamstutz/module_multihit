@@ -96,7 +96,7 @@ void MultiHitRenderer_renderSample(uniform Renderer *uniform _renderer,
 #    endif
 #  endif
   else
-    sample.rgb = make_vec3f(1);//NOTE(jda) - use a configurable bg color!
+    sample.rgb = renderer->super.bgColor;
 
   const int id = (renderer->bufferWidth*sample.sampleID.y) + sample.sampleID.x;
   if (renderer->intersections) renderer->intersections[id] = mhi.numHits;
