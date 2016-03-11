@@ -23,16 +23,16 @@ if (OSPRAY_MODULE_MULTIHIT)
   include_directories(
     ${PROJECT_SOURCE_DIR}/ospray
     ${PROJECT_SOURCE_DIR}/ospray/geometry
-    ${PROJECT_SOURCE_DIR}/ospray/include
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${RAYFORCE_INCLUDE_DIR}
+    ${EMBREE_INCLUDE_DIRS}
   )
 
   include_directories_ispc(
     ${PROJECT_SOURCE_DIR}/ospray
     ${PROJECT_SOURCE_DIR}/ospray/geometry
-    ${PROJECT_SOURCE_DIR}/ospray/include
     ${CMAKE_CURRENT_SOURCE_DIR}
+    ${EMBREE_INCLUDE_DIRS}
   )
 
   ospray_add_library(ospray_module_multihit SHARED
@@ -44,6 +44,7 @@ if (OSPRAY_MODULE_MULTIHIT)
 
   ospray_library_link_libraries(ospray_module_multihit
     ospray
+    ospray_common
   )
 
   if (NOT THIS_IS_MIC)
@@ -57,6 +58,7 @@ if (OSPRAY_MODULE_MULTIHIT)
 
     target_link_libraries(ospMultiHitViewer
       ospray
+      ospray_common
       ospray_minisg
       ospray_glut3d
       ${OPENGL_LIBRARIES}
