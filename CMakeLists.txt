@@ -35,15 +35,15 @@ if (OSPRAY_MODULE_MULTIHIT)
     ${CMAKE_CURRENT_SOURCE_DIR}
   )
 
-  ospray_add_library(ospray_module_multihit${OSPRAY_LIB_SUFFIX} SHARED
+  ospray_add_library(ospray_module_multihit SHARED
     MultiHitRenderer.cpp
     MultiHitRenderer.ispc
     MultiHitTriangles.cpp
     MultiHitTriangles.ispc
   )
 
-  target_link_libraries(ospray_module_multihit${OSPRAY_LIB_SUFFIX}
-    ospray${OSPRAY_LIB_SUFFIX}
+  ospray_library_link_libraries(ospray_module_multihit
+    ospray
   )
 
   if (NOT THIS_IS_MIC)
