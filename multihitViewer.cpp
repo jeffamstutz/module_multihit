@@ -17,9 +17,9 @@
 #define WARN_ON_INCLUDING_OSPCOMMON 1
 
 // viewer widget
-#include "apps/common/widgets/glut3D.h"
+#include "sample_apps/common/widgets/glut3D.h"
 // mini scene graph for loading the model
-#include "miniSG/miniSG.h"
+#include "sample_apps/common/miniSG/miniSG.h"
 // ospray, for rendering
 #include "ospray/ospray.h"
 
