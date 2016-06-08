@@ -23,6 +23,8 @@ if (OSPRAY_MODULE_MULTIHIT)
   include_directories(
     ${PROJECT_SOURCE_DIR}/ospray
     ${PROJECT_SOURCE_DIR}/ospray/geometry
+    ${PROJECT_SOURCE_DIR}/sample_apps
+    ${PROJECT_SOURCE_DIR}/sample_apps/common
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${RAYFORCE_INCLUDE_DIR}
     ${EMBREE_INCLUDE_DIRS}
@@ -58,6 +60,7 @@ if (OSPRAY_MODULE_MULTIHIT)
 
     target_link_libraries(ospMultiHitViewer
       ospray
+      ospray_commandline
       ospray_common
       ospray_minisg
       ospray_glut3d
