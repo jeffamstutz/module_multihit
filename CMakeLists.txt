@@ -23,8 +23,8 @@ if (OSPRAY_MODULE_MULTIHIT)
   include_directories(
     ${PROJECT_SOURCE_DIR}/ospray
     ${PROJECT_SOURCE_DIR}/ospray/geometry
-    ${PROJECT_SOURCE_DIR}/sample_apps
-    ${PROJECT_SOURCE_DIR}/sample_apps/common
+    ${PROJECT_SOURCE_DIR}/apps
+    ${PROJECT_SOURCE_DIR}/apps/common
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${RAYFORCE_INCLUDE_DIR}
     ${EMBREE_INCLUDE_DIRS}
