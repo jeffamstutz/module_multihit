@@ -23,7 +23,7 @@ class MultiHitRendererParser : public RendererParser
 {
 public:
   bool parse(int ac, const char **&av) override { return true; }
-  ospray::cpp::Renderer renderer() { return std::string("multihit"); }
+  ospray::cpp::Renderer renderer() override { return std::string("multihit"); }
 };
 
 class MultiHitSceneParser : public TriangleMeshSceneParser
