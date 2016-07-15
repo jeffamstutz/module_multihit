@@ -22,32 +22,26 @@ if (OSPRAY_MODULE_MULTIHIT)
 
   include_directories_ispc(${CMAKE_CURRENT_SOURCE_DIR})
 
-  ospray_add_library(ospray_module_multihit SHARED
+  ospray_create_library(module_multihit
     MultiHitRenderer.cpp
     MultiHitRenderer.ispc
     MultiHitTriangles.cpp
     MultiHitTriangles.ispc
-  )
-
-  ospray_library_link_libraries(ospray_module_multihit
+    LINK
     ospray
     ospray_common
   )
 
-  if (NOT THIS_IS_MIC)
-    add_executable(ospMultiHitViewer
-      multihitViewer.cpp
-    )
-
-    target_link_libraries(ospMultiHitViewer
-      ospray
-      ospray_commandline
-      ospray_common
-      ospray_minisg
-      ospray_glut3d
-      ${OPENGL_LIBRARIES}
-      ${GLUT_LIBRARIES}
-    )
-  endif()
+  ospray_create_application(MultiHitViewer
+    multihitViewer.cpp
+    LINK
+    ospray
+    ospray_commandline
+    ospray_common
+    ospray_minisg
+    ospray_glut3d
+    ${OPENGL_LIBRARIES}
+    ${GLUT_LIBRARIES}
+  )
 
 endif()
