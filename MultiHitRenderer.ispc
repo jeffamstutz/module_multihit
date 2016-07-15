@@ -15,12 +15,12 @@
 // ======================================================================== //
 
 
-#include "ospray/fb/FrameBuffer.ih"
-#include "ospray/camera/PerspectiveCamera.ih"
-#include "ospray/common/Ray.ih"
-#include "ospray/render/util.ih"
-#include "ospray/render/Renderer.ih"
-#include "ospray/common/Model.ih"
+#include "fb/FrameBuffer.ih"
+#include "camera/PerspectiveCamera.ih"
+#include "common/Ray.ih"
+#include "render/util.ih"
+#include "render/Renderer.ih"
+#include "common/Model.ih"
 #include "multihit_kernel.ih"
 
 struct MultiHitRenderer

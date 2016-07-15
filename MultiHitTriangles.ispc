@@ -14,7 +14,7 @@
 // limitations under the License.                                           //
 // ======================================================================== //
 
-#include "Geometry.ih"
+#include "geometry/Geometry.ih"
 #include "embree2/rtcore_geometry.isph"
 #include "multihit_kernel.ih"
 

@@ -18,24 +18,9 @@ option(OSPRAY_MODULE_MULTIHIT "Build 'multihit' module" ON)
 
 if (OSPRAY_MODULE_MULTIHIT)
 
-  configure_ospray()
+  include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
-  include_directories(
-    ${PROJECT_SOURCE_DIR}/ospray
-    ${PROJECT_SOURCE_DIR}/ospray/geometry
-    ${PROJECT_SOURCE_DIR}/apps
-    ${PROJECT_SOURCE_DIR}/apps/common
-    ${CMAKE_CURRENT_SOURCE_DIR}
-    ${RAYFORCE_INCLUDE_DIR}
-    ${EMBREE_INCLUDE_DIRS}
-  )
-
-  include_directories_ispc(
-    ${PROJECT_SOURCE_DIR}/ospray
-    ${PROJECT_SOURCE_DIR}/ospray/geometry
-    ${CMAKE_CURRENT_SOURCE_DIR}
-    ${EMBREE_INCLUDE_DIRS}
-  )
+  include_directories_ispc(${CMAKE_CURRENT_SOURCE_DIR})
 
   ospray_add_library(ospray_module_multihit SHARED
     MultiHitRenderer.cpp
@@ -50,10 +35,6 @@ if (OSPRAY_MODULE_MULTIHIT)
   )
 
   if (NOT THIS_IS_MIC)
-    include_directories(
-      ${PROJECT_SOURCE_DIR}/apps/modelViewer
-    )
-
     add_executable(ospMultiHitViewer
       multihitViewer.cpp
     )
