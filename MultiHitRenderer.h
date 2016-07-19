@@ -42,7 +42,6 @@ namespace ospray {
       void commit() override;
       void endFrame(void *perFrameData, const int32 fbChannelFlags) override;
 
-      Model *model;
       int *intersections;
       int *activeLanes;
       int *swaps;

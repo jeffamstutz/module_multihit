@@ -44,9 +44,9 @@ namespace mhtk   {
     { 
       ispcEquivalent = ispc::MultiHitRenderer_create(this);
 
-      intersections = NULL;
-      activeLanes   = NULL;
-      swaps         = NULL;
+      intersections = nullptr;
+      activeLanes   = nullptr;
+      swaps         = nullptr;
       bufferWidth = 0;
     }
 
@@ -59,12 +59,11 @@ namespace mhtk   {
     void MultiHitRenderer::commit()
     {
       Renderer::commit();
-      model = (Model *)getParamObject("model",NULL);
-      Camera *camera = (Camera *)getParamObject("camera",NULL);
+      Camera *camera = (Camera *)getParamObject("camera");
 
-      Data *ospIntersections = getParamData("intersections", NULL);
-      Data *ospLanes = getParamData("activeLanes", NULL);
-      Data *ospSwaps = getParamData("swaps", NULL);
+      Data *ospIntersections = getParamData("intersections");
+      Data *ospLanes = getParamData("activeLanes");
+      Data *ospSwaps = getParamData("swaps");
 
       if (ospIntersections) intersections = (int*)ospIntersections->data;
       if (ospLanes) activeLanes = (int*)ospLanes->data;
