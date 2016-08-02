@@ -14,34 +14,41 @@
 ## limitations under the License.                                           ##
 ## ======================================================================== ##
 
-option(OSPRAY_MODULE_MULTIHIT "Build 'multihit' module" ON)
+cmake_minimum_required(VERSION 2.8)
 
-if (OSPRAY_MODULE_MULTIHIT)
+project(multihit_module)
 
-  include_directories(${CMAKE_CURRENT_SOURCE_DIR})
+find_package(ospray REQUIRED)
 
-  include_directories_ispc(${CMAKE_CURRENT_SOURCE_DIR})
+include(${OSPRAY_USE_FILE})
 
-  ospray_create_library(module_multihit
-    MultiHitRenderer.cpp
-    MultiHitRenderer.ispc
-    MultiHitTriangles.cpp
-    MultiHitTriangles.ispc
-    LINK
-    ospray
-    ospray_common
-  )
+configure_ospray()
 
-  ospray_create_application(MultiHitViewer
-    multihitViewer.cpp
-    LINK
-    ospray
-    ospray_commandline
-    ospray_common
-    ospray_minisg
-    ospray_glut3d
-    ${OPENGL_LIBRARIES}
-    ${GLUT_LIBRARIES}
-  )
+include_directories(
+  ${CMAKE_CURRENT_SOURCE_DIR}
+  ${OSPRAY_INCLUDE_DIRS}
+)
 
-endif()
+include_directories_ispc(
+  ${CMAKE_CURRENT_SOURCE_DIR}
+  ${OSPRAY_INCLUDE_DIRS}
+)
+
+ospray_create_library(module_multihit
+  MultiHitRenderer.cpp
+  MultiHitRenderer.ispc
+  MultiHitTriangles.cpp
+  MultiHitTriangles.ispc
+  LINK
+  ospray
+  ospray_common
+)
+
+#ospray_create_application(MultiHitViewer
+#  multihitViewer.cpp
+#  LINK
+#  ${OSPRAY_LIBRARIES}
+#  ${OPENGL_LIBRARIES}
+#  ${GLUT_LIBRARIES}
+#)
+
