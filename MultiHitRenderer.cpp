@@ -17,11 +17,11 @@
 #undef NDEBUG
 
 #include "MultiHitRenderer.h"
-#include "ospray/camera/PerspectiveCamera.h"
-#include "ospray/volume/Volume.h"
+#include "camera/PerspectiveCamera.h"
+#include "volume/Volume.h"
 // ospray stuff
-#include "ospray/common/Ray.h"
-#include "ospray/common/Data.h"
+#include "common/Ray.h"
+#include "common/Data.h"
 // ispc exports
 #include "MultiHitRenderer_ispc.h"
 

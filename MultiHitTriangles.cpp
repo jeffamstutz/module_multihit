@@ -16,7 +16,7 @@
 
 #include "MultiHitTriangles.h"
 #include "MultiHitTriangles_ispc.h"
-#include "ospray/common/Model.h"
+#include "common/Model.h"
 
 namespace ospray {
 

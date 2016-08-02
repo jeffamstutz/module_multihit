@@ -16,7 +16,7 @@
 
 #include <string>
 
-#include "ospray/geometry/TriangleMesh.h"
+#include "geometry/TriangleMesh.h"
 
 namespace ospray {
 
