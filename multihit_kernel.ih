@@ -15,7 +15,7 @@
 // ======================================================================== //
 
 // ospray
-#include "ospray/common/Ray.ih"
+#include "common/Ray.ih"
 // embree
 #include "embree2/rtcore.isph"
 
