@@ -31,6 +31,7 @@ struct MultiHitRenderer
   uniform int *uniform lanesActive;
   uniform int *uniform swaps;
   uniform int bufferWidth;
+  uniform MultiHitInfo *uniform mhi;
 };
 
 inline vec3f make_bin_color(const int i, const int max)
@@ -98,6 +99,28 @@ void MultiHitRenderer_renderSample(uniform Renderer *uniform _renderer,
   else
     sample.rgb = renderer->super.bgColor;
 
+  if (sample.sampleID.x == renderer->super.fb->size.x / 2 &&
+      sample.sampleID.y == renderer->super.fb->size.y / 2) {
+    foreach_active(l) {
+      print("\nwriting data...\n");
+      renderer->mhi->numHits     = extract(mhi.numHits, l);
+      renderer->mhi->numSwaps    = extract(mhi.numSwaps, l);
+      renderer->mhi->numCoherent = extract(mhi.numCoherent, l);
+
+      const uniform int max = renderer->mhi->numHits;
+      for (uniform int i = 0; i < max; ++i) {
+        renderer->mhi->hitArray[i].t      = extract(mhi.hitArray[i].t, l);
+        renderer->mhi->hitArray[i].primID = extract(mhi.hitArray[i].primID, l);
+        renderer->mhi->hitArray[i].geomID = extract(mhi.hitArray[i].geomID, l);
+
+        renderer->mhi->hitArray[i].Ng.x = extract(mhi.hitArray[i].Ng.x, l);
+        renderer->mhi->hitArray[i].Ng.y = extract(mhi.hitArray[i].Ng.y, l);
+        renderer->mhi->hitArray[i].Ng.z = extract(mhi.hitArray[i].Ng.z, l);
+      }
+    }
+    print("...done\n");
+  }
+
   const int id = (renderer->bufferWidth*sample.sampleID.y) + sample.sampleID.x;
   if (renderer->intersections) renderer->intersections[id] = mhi.numHits;
   if (renderer->lanesActive)   renderer->lanesActive[id]   = mhi.numCoherent;
@@ -117,6 +140,7 @@ export void *uniform MultiHitRenderer_create(void *uniform cppE)
 export void MultiHitRenderer_set(void *uniform _renderer,
                              void *uniform _model,
                              void *uniform _camera,
+                             void *uniform _mhi,
                              void *uniform _intersections,
                              void *uniform _lanesActive,
                              void *uniform _swaps,
@@ -129,6 +153,7 @@ export void MultiHitRenderer_set(void *uniform _renderer,
   renderer->super.model = model;
   renderer->super.camera = camera;
   renderer->embreeSceneHandle = model->embreeSceneHandle;
+  renderer->mhi = (uniform MultiHitInfo *uniform)_mhi;
   renderer->intersections = (uniform int *uniform)_intersections;
   renderer->lanesActive = (uniform int *uniform)_lanesActive;
   renderer->swaps = (uniform int *uniform) _swaps;

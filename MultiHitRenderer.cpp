@@ -43,11 +43,6 @@ namespace mhtk   {
     MultiHitRenderer::MultiHitRenderer()
     { 
       ispcEquivalent = ispc::MultiHitRenderer_create(this);
-
-      intersections = nullptr;
-      activeLanes   = nullptr;
-      swaps         = nullptr;
-      bufferWidth = 0;
     }
 
     std::string MultiHitRenderer::toString() const
@@ -73,7 +68,7 @@ namespace mhtk   {
 
       if (model && camera)
       {
-        ispc::MultiHitRenderer_set(getIE(),model->getIE(),camera->getIE(),
+        ispc::MultiHitRenderer_set(getIE(),model->getIE(),camera->getIE(), &mhi,
                                intersections, activeLanes, swaps, bufferWidth);
       }
     }
@@ -82,6 +77,18 @@ namespace mhtk   {
                                     const int32 fbChannelFlags)
     {
       Renderer::endFrame(perFrameData, fbChannelFlags);
+
+      cout << "Data: " << endl;
+      cout << "     numHits: " << mhi.numHits << endl;
+      cout << "    numSwaps: " << mhi.numSwaps << endl;
+      cout << " numCoherent: " << mhi.numCoherent << endl;
+      for (int i = 0; i < mhi.numHits; ++i) {
+        auto &hit = mhi.hitArray[i];
+        cout << " t" << i << ": ";
+        cout << '{' << hit.t << ',' << hit.geomID << ',' << hit.primID;
+        cout << ",{" << hit.Ng.x << ',' << hit.Ng.y << ',' << hit.Ng.z << "}}";
+      }
+      cout << endl << endl;
 
       if (activeLanes)
       {

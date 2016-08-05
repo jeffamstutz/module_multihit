@@ -22,6 +22,24 @@
 #include "embree2/rtcore.h"
 #include "embree2/rtcore_scene.h"
 
+struct MHTKHit
+{
+  float t; //!< distance along the ray
+  int primID;
+  int geomID;
+  ospray::vec3f Ng;
+};
+
+#define MAX_HITS_PER_TRACE 512
+
+struct MultiHitInfo
+{
+  MHTKHit hitArray[MAX_HITS_PER_TRACE];
+  int32_t numHits;
+  int32_t numSwaps;
+  int32_t numCoherent;
+};
+
 namespace ospray {
   struct Camera;
   struct Model;
@@ -42,10 +60,12 @@ namespace ospray {
       void commit() override;
       void endFrame(void *perFrameData, const int32 fbChannelFlags) override;
 
-      int *intersections;
-      int *activeLanes;
-      int *swaps;
-      int bufferWidth;
+      MultiHitInfo mhi;
+
+      int *intersections {nullptr};
+      int *activeLanes {nullptr};
+      int *swaps {nullptr};
+      int bufferWidth {0};
     };
 
     /*! @} */
