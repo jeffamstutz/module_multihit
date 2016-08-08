@@ -22,7 +22,17 @@
 #include "embree2/rtcore.h"
 #include "embree2/rtcore_scene.h"
 
+#ifdef _WIN32
+#  define ALIGN64 __declspec(align(64))
+#else
+#  define ALIGN64 __attribute__((aligned(64)))
+#endif // _WIN32
+
+#if 0
 struct MHTKHit
+#else
+struct ALIGN64 MHTKHit
+#endif
 {
   float t; //!< distance along the ray
   int primID;
@@ -32,7 +42,11 @@ struct MHTKHit
 
 #define MAX_HITS_PER_TRACE 512
 
+#if 0
 struct MultiHitInfo
+#else
+struct ALIGN64 MultiHitInfo
+#endif
 {
   MHTKHit hitArray[MAX_HITS_PER_TRACE];
   int32_t numHits;

@@ -79,9 +79,9 @@ namespace mhtk   {
       Renderer::endFrame(perFrameData, fbChannelFlags);
 
       cout << "Data: " << endl;
-      cout << "     numHits: " << mhi.numHits << endl;
-      cout << "    numSwaps: " << mhi.numSwaps << endl;
-      cout << " numCoherent: " << mhi.numCoherent << endl;
+      cout << "     numHits(" << &mhi.numHits << "): " << mhi.numHits << endl;
+      cout << "    numSwaps(" << &mhi.numSwaps << "): " << mhi.numSwaps << endl;
+      cout << " numCoherent(" << &mhi.numCoherent << "): " << mhi.numCoherent << endl;
       for (int i = 0; i < mhi.numHits; ++i) {
         auto &hit = mhi.hitArray[i];
         cout << " t" << i << ": ";

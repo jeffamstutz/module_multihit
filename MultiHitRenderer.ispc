@@ -103,19 +103,22 @@ void MultiHitRenderer_renderSample(uniform Renderer *uniform _renderer,
       sample.sampleID.y == renderer->super.fb->size.y / 2) {
     foreach_active(l) {
       print("\nwriting data...\n");
-      renderer->mhi->numHits     = extract(mhi.numHits, l);
-      renderer->mhi->numSwaps    = extract(mhi.numSwaps, l);
-      renderer->mhi->numCoherent = extract(mhi.numCoherent, l);
+      renderer->mhi[0].numHits     = extract(mhi.numHits, l);
+      renderer->mhi[0].numSwaps    = extract(mhi.numSwaps, l);
+      renderer->mhi[0].numCoherent = extract(mhi.numCoherent, l);
+      print("wrote numHits(%): %\n", &renderer->mhi[0].numHits, renderer->mhi[0].numHits);
+      print("wrote numSwaps(%): %\n", &renderer->mhi[0].numSwaps, renderer->mhi[0].numSwaps);
+      print("wrote numCoherent(%): %\n", &renderer->mhi[0].numCoherent, renderer->mhi[0].numCoherent);
 
       const uniform int max = renderer->mhi->numHits;
       for (uniform int i = 0; i < max; ++i) {
-        renderer->mhi->hitArray[i].t      = extract(mhi.hitArray[i].t, l);
-        renderer->mhi->hitArray[i].primID = extract(mhi.hitArray[i].primID, l);
-        renderer->mhi->hitArray[i].geomID = extract(mhi.hitArray[i].geomID, l);
+        renderer->mhi[0].hitArray[i].t      = extract(mhi.hitArray[i].t, l);
+        renderer->mhi[0].hitArray[i].primID = extract(mhi.hitArray[i].primID, l);
+        renderer->mhi[0].hitArray[i].geomID = extract(mhi.hitArray[i].geomID, l);
 
-        renderer->mhi->hitArray[i].Ng.x = extract(mhi.hitArray[i].Ng.x, l);
-        renderer->mhi->hitArray[i].Ng.y = extract(mhi.hitArray[i].Ng.y, l);
-        renderer->mhi->hitArray[i].Ng.z = extract(mhi.hitArray[i].Ng.z, l);
+        renderer->mhi[0].hitArray[i].Ng.x = extract(mhi.hitArray[i].Ng.x, l);
+        renderer->mhi[0].hitArray[i].Ng.y = extract(mhi.hitArray[i].Ng.y, l);
+        renderer->mhi[0].hitArray[i].Ng.z = extract(mhi.hitArray[i].Ng.z, l);
       }
     }
     print("...done\n");
