@@ -113,10 +113,10 @@ namespace mhtk   {
       }
     }
 
-    OSP_REGISTER_RENDERER(MultiHitRenderer,multihit)
-    OSP_REGISTER_RENDERER(MultiHitRenderer,mhtk_xray_ispc)
-    OSP_REGISTER_RENDERER(MultiHitRenderer,mhtk)
-    OSP_REGISTER_RENDERER(MultiHitRenderer,xray)
+    OSP_REGISTER_RENDERER(MultiHitRenderer,multihit);
+    OSP_REGISTER_RENDERER(MultiHitRenderer,mhtk_xray_ispc);
+    OSP_REGISTER_RENDERER(MultiHitRenderer,mhtk);
+    OSP_REGISTER_RENDERER(MultiHitRenderer,xray);
     /*! @} */
     /*! \brief module initialization function \ingroup module_mhtk */
     extern "C" void ospray_init_module_multihit()
