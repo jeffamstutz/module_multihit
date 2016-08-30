@@ -22,7 +22,7 @@ if (OSPRAY_MODULE_MULTIHIT)
 
   include_directories_ispc(${CMAKE_CURRENT_SOURCE_DIR})
 
-  ospray_create_library(module_multihit
+  ospray_create_library(ospray_module_multihit
     MultiHitRenderer.cpp
     MultiHitRenderer.ispc
     MultiHitTriangles.cpp
@@ -32,7 +32,7 @@ if (OSPRAY_MODULE_MULTIHIT)
     ospray_common
   )
 
-  ospray_create_application(MultiHitViewer
+  ospray_create_application(ospMultiHitViewer
     multihitViewer.cpp
     LINK
     ospray
