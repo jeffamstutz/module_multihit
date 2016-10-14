@@ -45,8 +45,8 @@ int main(int ac, const char **av)
                                   MultiHitSceneParser,
                                   DefaultLightsParser>(ac, av);
 
-  ospcommon::box3f      bbox;
-  ospray::cpp::Model    model;
+  std::deque<ospcommon::box3f>      bbox;
+  std::deque<ospray::cpp::Model>    model;
   ospray::cpp::Renderer renderer;
   ospray::cpp::Camera   camera;
 
