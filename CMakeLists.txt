@@ -19,22 +19,18 @@ cmake_minimum_required(VERSION 2.8)
 project(multihit_module)
 
 find_package(ospray REQUIRED)
-find_package(embree 2.10.0 REQUIRED)#NOTE: must use OSPRay linked against this!
-
 include(${OSPRAY_USE_FILE})
 
-configure_ospray()
+ospray_configure_ispc_isa()
 
 include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}
   ${OSPRAY_INCLUDE_DIRS}
-  ${EMBREE_INCLUDE_DIRS}
 )
 
 include_directories_ispc(
   ${CMAKE_CURRENT_SOURCE_DIR}
   ${OSPRAY_INCLUDE_DIRS}
-  ${EMBREE_INCLUDE_DIRS}
 )
 
 ospray_create_library(module_multihit
